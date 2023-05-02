@@ -3,7 +3,7 @@
 Telegram bot with no functionality👌
 [Add to telegram](t.me/Koobrabot_bot)
 
-## Commands
+## How to use?
 
 - /start - Initilize bot
 - /hello - Say hello to koobra 😁
