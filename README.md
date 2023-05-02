@@ -1,7 +1,7 @@
 # Koobrabot
 
 Telegram bot with no functionality👌
-[Add to telegram](t.me/Koobrabot_bot)
+[Add to telegram](telegram://t.me/Koobrabot_bot)
 
 ## How to use?
 
