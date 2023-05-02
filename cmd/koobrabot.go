@@ -12,12 +12,13 @@ import (
 	"github.com/Chubasic/koobrabot/api"
 	"github.com/Chubasic/koobrabot/utils"
 	"github.com/spf13/cobra"
-	tele "gopkg.in/telebot.v3"
+	"gopkg.in/telebot.v3"
 )
 
 // koobrabotCmd represents the koobrabot command
 
-var TELE_TOKEN, TOKEN_VALID = os.LookupEnv("API_TOKEN")
+var TELE_TOKEN,
+	TOKEN_VALID = os.LookupEnv("API_TOKEN")
 
 // Init bot
 var koobrabotCmd = &cobra.Command{
@@ -34,30 +35,30 @@ to quickly create a Cobra application.`,
 
 		if TOKEN_VALID {
 			//Telegram API connection settings
-			conf := tele.Settings{
+			conf := telebot.Settings{
 				Token:  TELE_TOKEN,
-				Poller: &tele.LongPoller{Timeout: 10 * time.Second},
+				Poller: &telebot.LongPoller{Timeout: 10 * time.Second},
 			}
-			koob, err := tele.NewBot(conf)
+			koob, err := telebot.NewBot(conf)
 
 			if err != nil {
 				utils.ErrorPrint(err.Error())
 				return
 			}
 
-			koob.Handle("/start", func(c tele.Context) error {
+			koob.Handle("/start", func(c telebot.Context) error {
 				return c.Send(fmt.Sprintf("Koobrabot version %s initialized", app_version))
 			})
-			koob.Handle("/hello", func(c tele.Context) error {
+			koob.Handle("/hello", func(c telebot.Context) error {
 				return c.Send(fmt.Sprintf("Hello! My name is Koobrabot version %s", app_version))
 			})
-			koob.Handle("/kitty", func(c tele.Context) error {
+			koob.Handle("/kitty", func(c telebot.Context) error {
 				imageButes, err := api.FetchImage()
 				if err != nil {
 					return c.Send(err)
 				}
-				image := &tele.Photo{File: tele.FromReader(bytes.NewReader(imageButes))}
-				return c.SendAlbum(tele.Album{image})
+				image := &telebot.Photo{File: telebot.FromReader(bytes.NewReader(imageButes))}
+				return c.SendAlbum(telebot.Album{image})
 			})
 
 			fmt.Printf("Koobrabot %s started", app_version)
