@@ -17,7 +17,7 @@ import (
 
 // koobrabotCmd represents the koobrabot command
 
-var API_TOKEN, TOKEN_VALID = os.LookupEnv("API_TOKEN")
+var TELE_TOKEN, TOKEN_VALID = os.LookupEnv("API_TOKEN")
 
 // Init bot
 var koobrabotCmd = &cobra.Command{
@@ -35,7 +35,7 @@ to quickly create a Cobra application.`,
 		if TOKEN_VALID {
 			//Telegram API connection settings
 			conf := tele.Settings{
-				Token:  API_TOKEN,
+				Token:  TELE_TOKEN,
 				Poller: &tele.LongPoller{Timeout: 10 * time.Second},
 			}
 			koob, err := tele.NewBot(conf)
