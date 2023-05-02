@@ -4,11 +4,12 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"bytes"
 	"fmt"
-	"log"
 	"os"
 	"time"
 
+	"github.com/Chubasic/koobrabot/api"
 	"github.com/Chubasic/koobrabot/utils"
 	"github.com/spf13/cobra"
 	tele "gopkg.in/telebot.v3"
@@ -44,14 +45,22 @@ to quickly create a Cobra application.`,
 				return
 			}
 
+			koob.Handle("/start", func(c tele.Context) error {
+				return c.Send(fmt.Sprintf("Koobrabot version %s initialized", app_version))
+			})
 			koob.Handle("/hello", func(c tele.Context) error {
 				return c.Send(fmt.Sprintf("Hello! My name is Koobrabot version %s", app_version))
 			})
-			koob.Handle(tele.OnText, func(c tele.Context) error {
-				log.Print(c.Message().Payload, c.Text())
-				return err
+			koob.Handle("/kitty", func(c tele.Context) error {
+				imageButes, err := api.FetchImage()
+				if err != nil {
+					return c.Send(err)
+				}
+				image := &tele.Photo{File: tele.FromReader(bytes.NewReader(imageButes))}
+				return c.SendAlbum(tele.Album{image})
 			})
-			fmt.Printf("koobrabot %s started", app_version)
+
+			fmt.Printf("Koobrabot %s started", app_version)
 
 			koob.Start()
 		} else {
