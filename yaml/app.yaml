@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+  labels:
+    app: demo
+    run: demo
+spec:
+  containers:
+    - image: example
+      name: app
+      ports:
+        - containerPort: 8000
+          name: http
