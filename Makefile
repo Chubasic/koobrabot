@@ -10,7 +10,6 @@ ARCH=$(shell uname -m)
 TARGET_ARCH=arm64 #amd64
 DARWIN=darwin
 LINUX=linux
-IMAGE_TAG=
 
 format:
 	 gofmt -s -w ./
