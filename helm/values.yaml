@@ -1,0 +1,20 @@
+# Default values for helm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: chubasic/koobrabot.git
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "v1.0.3-42bc575-arm64"
+
+secret:
+  tokenName: API_TOKEN
+  tokenKey: token
+  name: "koobrabot"
+
+imagePullSecrets: []
+nameOverride: "koobrabot"
+fullnameOverride: ""
