@@ -10,6 +10,7 @@ ARCH=$(shell uname -m)
 TARGET_ARCH=arm64 #amd64
 DARWIN=darwin
 LINUX=linux
+CHART_NAME=helm
 
 format:
 	 gofmt -s -w ./
@@ -39,8 +40,14 @@ windows:
 image: 
 	docker build . -t ${REGISTRY}/${APP_NAME}:${VERSION}-${TARGET_ARCH} --build-arg TARGET_ARCH=${TARGET_ARCH} --build-arg CMD=${TARGETOS}
 
+image-chart: 
+	docker build . -t ${REGISTRY}/${CHART_NAME}:${VERSION}-${TARGET_ARCH} --build-arg TARGET_ARCH=${TARGET_ARCH} --build-arg CMD=${TARGETOS}
+
 push:
 	docker push ${REGISTRY}/${APP_NAME}:${VERSION}-${TARGET_ARCH}
+	
+push-chart:
+	docker push ${REGISTRY}/${CHART_NAME}:${VERSION}-${TARGET_ARCH}
 
 # clean:
 # 	rm -rf koobrabot
