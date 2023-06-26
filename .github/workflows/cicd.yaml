@@ -33,4 +33,20 @@ jobs:
           REGISTRY: ${{ secrets.REGISTRY }}
           TARGET_ARCH: "amd64"
           TARGETOS: "linux"
-        run: echo ${{ env.REGISTRY }} | make image TARGET_ARCH=${{ env.TARGET_ARCH }} TARGETOS=${{ env.TARGETOS }} REGISTRY=${{ env.REGISTRY }}  push TARGET_ARCH=${{ env.TARGET_ARCH }} TARGETOS=${{ env.TARGETOS }} REGISTRY=${{ env.REGISTRY }}
+        run: make image TARGET_ARCH=${{ env.TARGET_ARCH }} TARGETOS=${{ env.TARGETOS }} REGISTRY=${{ env.REGISTRY }}  push TARGET_ARCH=${{ env.TARGET_ARCH }} TARGETOS=${{ env.TARGETOS }} REGISTRY=${{ env.REGISTRY }}
+
+  cd:
+    name: CD
+    needs: ci
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: echo "VERSION=$(make v)"
+
+      - uses: mikefarah/yq@master
+        with:
+          cmd: yq -i '.image.tag=strenv(VERSION)' helm/values.yaml

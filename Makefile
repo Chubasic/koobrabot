@@ -50,6 +50,10 @@ push:
 push-chart:
 	docker push ${REGISTRY}/${CHART_NAME}:${VERSION}-${TARGET_ARCH}
 
+v:
+	@echo ${VERSION}
+
+
 # clean:
 # 	rm -rf koobrabot
 
