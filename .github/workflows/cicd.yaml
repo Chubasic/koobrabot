@@ -1,0 +1,57 @@
+name: KOOBRA-CICD
+
+on:
+  push:
+    branches:
+      - develop
+
+# on: push
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Run tests
+        run: make test
+      - id: "auth"
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_TOKEN }}
+      - name: Build&Push
+        env:
+          APP_NAME: "koobrabot"
+          REGISTRY: ${{ secrets.REGISTRY }}
+          TARGET_ARCH: "amd64"
+          TARGETOS: "linux"
+        run: make image TARGET_ARCH=${{ env.TARGET_ARCH }} TARGETOS=${{ env.TARGETOS }} REGISTRY=${{ env.REGISTRY }}  push TARGET_ARCH=${{ env.TARGET_ARCH }} TARGETOS=${{ env.TARGETOS }} REGISTRY=${{ env.REGISTRY }}
+
+  cd:
+    name: CD
+    needs: ci
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: echo "VERSION=$(make v)"
+
+      - uses: mikefarah/yq@master
+        with:
+          cmd: yq -i '.image.tag=strenv(VERSION)' helm/values.yaml
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@hithub.com
+          git commit -am "update version to $VERSION"
+          git push

@@ -1,4 +1,5 @@
-APP_NAME=$(shell basename $(shell git remote get-url origin))
+# The cut command is used to extract specific sections of a string. In this case, it uses the delimiter .
+APP_NAME=$(shell basename $(shell git remote get-url origin) | cut -d '.' -f1)
 # Registry name
 REGISTRY=chubasic
 # Get git tag and current commit hash as registry tag name
@@ -48,6 +49,10 @@ push:
 	
 push-chart:
 	docker push ${REGISTRY}/${CHART_NAME}:${VERSION}-${TARGET_ARCH}
+
+v:
+	@echo ${VERSION}
+
 
 # clean:
 # 	rm -rf koobrabot
