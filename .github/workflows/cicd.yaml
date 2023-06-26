@@ -1,11 +1,11 @@
 name: KOOBRA-CICD
 
-# on:
-#   push:
-#     branches:
-#       - develop
+on:
+  push:
+    branches:
+      - develop
 
-on: push
+# on: push
 
 jobs:
   ci:
