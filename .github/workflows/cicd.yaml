@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Run tests
         run: make test
@@ -31,4 +33,4 @@ jobs:
           REGISTRY: ${{ secrets.REGISTRY }}
           TARGET_ARCH: "amd64"
           TARGETOS: "linux"
-        run: make image push
+        run: make image TARGET_ARCH=${{ env.TARGET_ARCH }} TARGETOS=${{ env.TARGETOS }} REGISTRY=${{ env.REGISTRY }}  push TARGET_ARCH=${{ env.TARGET_ARCH }} TARGETOS=${{ env.TARGETOS }} REGISTRY=${{ env.REGISTRY }}
