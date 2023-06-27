@@ -1,15 +1,12 @@
 replicaCount: 1
-
 image:
   repository: chubasic
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.5-14f38c1"
+  tag: ""
   arch: amd64
-
 secret:
   tokenName: API_TOKEN
   tokenKey: token
   name: "koobrabot"
-
 nameOverride: "koobrabot"
