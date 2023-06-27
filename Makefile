@@ -39,16 +39,16 @@ windows:
 
 
 image: 
-	docker build . -t ${REGISTRY}/${APP_NAME}:${VERSION}-${TARGET_ARCH} --build-arg TARGET_ARCH=${TARGET_ARCH} --build-arg CMD=${TARGETOS}
+	docker build . -t ${REGISTRY}/${APP_NAME}:${VERSION}-${TARGETOS}-${TARGET_ARCH} --build-arg TARGET_ARCH=${TARGET_ARCH} --build-arg CMD=${TARGETOS}
 
 image-chart: 
-	docker build . -t ${REGISTRY}/${CHART_NAME}:${VERSION}-${TARGET_ARCH} --build-arg TARGET_ARCH=${TARGET_ARCH} --build-arg CMD=${TARGETOS}
+	docker build . -t ${REGISTRY}/${CHART_NAME}:${VERSION}-${TARGETOS}-${TARGET_ARCH} --build-arg TARGET_ARCH=${TARGET_ARCH} --build-arg CMD=${TARGETOS}
 
 push:
-	docker push ${REGISTRY}/${APP_NAME}:${VERSION}-${TARGET_ARCH}
+	docker push ${REGISTRY}/${APP_NAME}:${VERSION}-${TARGETOS}-${TARGET_ARCH}
 	
 push-chart:
-	docker push ${REGISTRY}/${CHART_NAME}:${VERSION}-${TARGET_ARCH}
+	docker push ${REGISTRY}/${CHART_NAME}:${VERSION}-${TARGETOS}-${TARGET_ARCH}
 
 v:
 	@echo ${VERSION}
@@ -58,5 +58,5 @@ v:
 # 	rm -rf koobrabot
 
 clean:
-	docker rmi ${REGISTRY}/${APP_NAME}:${VERSION}-${TARGET_ARCH}
+	docker rmi ${REGISTRY}/${APP_NAME}:${VERSION}-${TARGETOS}-${TARGET_ARCH}
 
