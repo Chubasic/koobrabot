@@ -3,7 +3,7 @@ image:
   repository: chubasic
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "v1.0.4-9450a77"
   arch: amd64
 secret:
   tokenName: API_TOKEN
