@@ -1,9 +1,9 @@
 replicaCount: 1
 image:
-  repository: chubasic
+  repository: '''ghcr.io/chubasic'''
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.4-9450a77"
+  tag: "v1.0.4-852d054"
   arch: "amd64"
 secret:
   tokenName: API_TOKEN
